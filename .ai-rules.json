@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "resources": {
+    "memory": {
+      "reserveMiBPerActiveWorktree": 1024,
+      "basis": "estimated",
+      "estimateReason": "Astro static builds and Node test processes are expected to fit within 1 GiB; replace this estimate after measuring a representative build and test run."
+    }
+  }
+}

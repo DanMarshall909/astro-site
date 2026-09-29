@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import site from '../../site.config.json';
+---
+
+<BaseLayout>
+  <section class="hero shell">
+    <div class="hero-copy">
+      <p class="eyebrow">A home for good work</p>
+      <h1>Make your next idea easy to explore.</h1>
+      <p class="lead">{site.description} Start here, then follow the paths that matter to you.</p>
+      <div class="actions">
+        <a class="button button-primary" href="/about/">Explore the project <span aria-hidden="true">→</span></a>
+        <a class="button button-secondary" href="#highlights">See highlights</a>
+      </div>
+    </div>
+    <img class="hero-art" src="/assets/hero-pattern.svg" alt="Abstract paths crossing a soft grid" width="600" height="420" />
+  </section>
+
+  <section class="section shell" id="highlights" aria-labelledby="highlights-title">
+    <div class="section-heading">
+      <p class="eyebrow">Find your way</p>
+      <h2 id="highlights-title">The important things, up front.</h2>
+      <p>Use these cards to lead visitors to the pages and resources they need most.</p>
+    </div>
+    <div class="feature-grid">
+      <FeatureCard number="01" title="Understand the work" description="Explain what this project does and who it helps." href="/about/" linkLabel="Read the overview" />
+      <FeatureCard number="02" title="Find the details" description="Give readers a clear path from the overview to deeper material." href="/about/" linkLabel="See the details" />
+      <FeatureCard number="03" title="Take the next step" description="Help visitors decide where to go after their first look." href="/about/" linkLabel="Get started" />
+    </div>
+  </section>
+</BaseLayout>

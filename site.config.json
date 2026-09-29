@@ -1,0 +1,9 @@
+{
+  "name": "Your Site",
+  "description": "A clear, useful home for your project and its work.",
+  "domain": "",
+  "navigation": [
+    { "label": "Home", "href": "/" },
+    { "label": "About", "href": "/about/" }
+  ]
+}

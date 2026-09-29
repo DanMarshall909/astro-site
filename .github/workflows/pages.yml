@@ -1,0 +1,59 @@
+name: Verify and publish site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.domain.outputs.configured }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Check whether this copy has a custom domain
+        id: domain
+        run: |
+          if node -e "process.exit(JSON.parse(require('node:fs').readFileSync('site.config.json')).domain ? 0 : 1)"; then
+            npm run check:configured
+            echo 'configured=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'configured=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Upload verified site
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && steps.domain.outputs.configured == 'true'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+          include-hidden-files: true
+
+  deploy:
+    needs: verify
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.verify.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

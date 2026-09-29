@@ -1,0 +1,22 @@
+{
+  "name": "astro-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "setup": "node scripts/configure-site.mjs",
+    "test:setup": "node --test tests/configure-site.test.mjs",
+    "test:site": "node --test tests/built-site.test.mjs",
+    "test": "npm run test:setup && npm run build && npm run test:site",
+    "check:configured": "node scripts/check-configured.mjs"
+  },
+  "dependencies": {
+    "astro": "7.3.5"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

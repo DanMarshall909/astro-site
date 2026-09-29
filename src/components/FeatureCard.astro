@@ -1,0 +1,17 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  description: string;
+  href: string;
+  linkLabel: string;
+}
+const { number, title, description, href, linkLabel } = Astro.props;
+---
+
+<article class="feature-card">
+  <span class="feature-number" aria-hidden="true">{number}</span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <a href={href}>{linkLabel}<span aria-hidden="true"> ↗</span></a>
+</article>
